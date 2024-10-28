@@ -1,0 +1,14 @@
+scrape_configs:
+  - job_name: "pushgateway"
+    honor_labels: true
+    static_configs:
+      - targets: ["pushgateway:9091"]
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+rule_files:
+  - alerts.yml
+

@@ -1,0 +1,75 @@
+
+version: '3.7'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+    alertmanager-data: {}
+
+networks:
+  ponomarevpio-my-netology-hw:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+  
+services:
+
+  prometheus:
+    image: prom/prometheus:v2.55.0
+    container_name: ponomarevpio-netology-prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-lifecycle
+    ports:
+      - 9090:9090
+    networks:
+      - ponomarevpio-my-netology-hw
+    restart: always
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: ponomarevpio-netology-pushgateway
+    ports:
+      - 9091:9091
+    depends_on:
+      - prometheus
+    networks:
+      - ponomarevpio-my-netology-hw
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    container_name: ponomarevpio-netology-grafana
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/custom.ini
+    depends_on:
+      - prometheus
+    ports:
+      - 80:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana:/etc/grafana
+    networks:
+      - ponomarevpio-my-netology-hw
+    restart: always
+
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    container_name: ponomarevpio-netology-alertmanager
+    command: --config.file=/etc/alertmanager/alertmanager.yml
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager
+      - alertmanager-data:/data
+    networks:
+      - ponomarevpio-my-netology-hw
+    depends_on:
+      - prometheus
+    restart: always
+
