@@ -26,7 +26,71 @@ volumes;
 networks.
 При выполнении задания используйте подсеть 10.5.0.0/16. Ваша подсеть должна называться: <ваши фамилия и инициалы>-my-netology-hw. Все приложения из последующих заданий должны находиться в этой конфигурации.
 
-![Скриншот-25-10-2024 12_17_16](https://github.com/user-attachments/assets/e203768f-05f3-4514-b7b8-639f05b8bf20)
+![image](https://github.com/user-attachments/assets/6b21f4f2-0744-45a5-9cb7-e250a33db1cf)
+
+Задание 3
+Выполните действия:
+
+Создайте конфигурацию docker-compose для Prometheus с именем контейнера <ваши фамилия и инициалы>-netology-prometheus.
+Добавьте необходимые тома с данными и конфигурацией (конфигурация лежит в репозитории в директории 6-04/prometheus ).
+Обеспечьте внешний доступ к порту 9090 c докер-сервера.
+
+![image](https://github.com/user-attachments/assets/9f106ae7-8132-43cd-bf10-316e4d6d07fc)
+
+Задание 4
+Выполните действия:
+
+Создайте конфигурацию docker-compose для Pushgateway с именем контейнера <ваши фамилия и инициалы>-netology-pushgateway.
+Обеспечьте внешний доступ к порту 9091 c докер-сервера.
+
+![image](https://github.com/user-attachments/assets/03226708-271f-48f5-9b7c-8d02102451a9)
+
+Задание 5
+Выполните действия:
+
+Создайте конфигурацию docker-compose для Grafana с именем контейнера <ваши фамилия и инициалы>-netology-grafana.
+Добавьте необходимые тома с данными и конфигурацией (конфигурация лежит в репозитории в директории 6-04/grafana).
+Добавьте переменную окружения с путем до файла с кастомными настройками (должен быть в томе), в самом файле пропишите логин=<ваши фамилия и инициалы> пароль=netology.
+Обеспечьте внешний доступ к порту 3000 c порта 80 докер-сервера.
+
+![image](https://github.com/user-attachments/assets/d10fa3dc-2e34-4ae0-9acf-4d730f8dc021)
+
+Задание 6
+Выполните действия.
+
+Настройте поочередность запуска контейнеров.
+Настройте режимы перезапуска для контейнеров.
+Настройте использование контейнерами одной сети.
+Запустите сценарий в detached режиме.
+
+docker-compose up -d 
+
+Задание 7
+Выполните действия.
+
+Выполните запрос в Pushgateway для помещения метрики <ваши фамилия и инициалы> со значением 5 в Prometheus: echo "<ваши фамилия и инициалы> 5" | curl --data-binary @- http://localhost:9091/metrics/job/netology.
+Залогиньтесь в Grafana с помощью логина и пароля из предыдущего задания.
+Cоздайте Data Source Prometheus (Home -> Connections -> Data sources -> Add data source -> Prometheus -> указать "Prometheus server URL = http://prometheus:9090" -> Save & Test).
+Создайте график на основе добавленной в пункте 5 метрики (Build a dashboard -> Add visualization -> Prometheus -> Select metric -> Metric explorer -> <ваши фамилия и инициалы -> Apply.
+В качестве решения приложите:
+
+docker-compose.yml целиком;
+скриншот команды docker ps после запуске docker-compose.yml;
+![image](https://github.com/user-attachments/assets/7754dc24-e0f5-4a4a-8a61-683415440744)
+
+скриншот графика, постоенного на основе вашей метрики.
+![image](https://github.com/user-attachments/assets/823c50e5-accb-45f9-b509-c08973bce6f6)
+
+Задание 8
+Выполните действия:
+Остановите и удалите все контейнеры одной командой.
+В качестве решения приложите скриншот консоли с проделанными действиями.
+
+![image](https://github.com/user-attachments/assets/fdb03995-d08a-428a-94c0-7675aaafd6e1)
+
+
+
+
 
 
 
